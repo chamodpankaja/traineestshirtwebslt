@@ -86,6 +86,23 @@
         background-color: #3ca035; /* Slightly darker green on hover */
       }
 
+      .btn:disabled,
+      .btn.disabled {
+        background-color: #666;
+        border-color: #666;
+        color: #999;
+        cursor: not-allowed;
+        box-shadow: none;
+        opacity: 0.6;
+      }
+
+      .btn:disabled:hover,
+      .btn.disabled:hover {
+        transform: none;
+        box-shadow: none;
+        background-color: #666;
+      }
+
       /* --- 1. HERO SECTION --- */
       .hero {
         display: flex;
@@ -459,6 +476,7 @@
       // ==========================================
 
       const timerElement = document.getElementById("countdown-timer");
+      const buyButton = document.querySelector(".btn");
 
       function updateCountdown() {
         const now = new Date().getTime();
@@ -467,6 +485,14 @@
         if (distance < 0) {
           // What happens when timer expires
           timerElement.innerHTML = "<h3 class='highlight'>ORDERING CLOSED</h3>";
+          
+          // Disable the Buy Now button
+          if (buyButton) {
+            buyButton.classList.add("disabled");
+            buyButton.style.pointerEvents = "none";
+            buyButton.setAttribute("aria-disabled", "true");
+          }
+          
           clearInterval(interval);
           return;
         }
